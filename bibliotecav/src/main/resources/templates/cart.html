@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout/layout :: head}"></head>
+    <title>Carrito de compras</title>
+    <!-- Importar los archivos CSS y JavaScript necesarios -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <style>
+        h2 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .table {
+            margin-bottom: 30px;
+        }
+        .empty-cart-message {
+            text-align: center;
+            margin-top: 30px;
+        }
+        .clear-cart-button {
+            text-align: center;
+            margin-top: 30px;
+        }
+        .total {
+            font-weight: bold;
+            text-align: right;
+        }
+        .book-image {
+            height: 100px;
+        }
+    </style>
+</head>
+<body>
+
+    <header th:replace="~{layout/layout :: header}"></header>
+        <div class="container">
+        <h2 class="mt-4">Carrito de compras</h2>
+        <table class="table">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Libro</th>
+                    <th></th>
+                    <th>Cantidad</th>
+                    <th>Precio</th>
+                    <th>Total</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="item : ${cartItems}">
+                    <td th:text="${item.libro?.titulo}"></td>
+                    <td>
+                        <img th:src="@{/images/{imagen}(imagen=${item.libro?.imagen})}" class="book-image" alt="Portada del libro" />
+                    </td>
+                    <td>
+                        <form th:action="@{/cart/update/{itemId}(itemId=${item.id})}" method="post">
+                            <div class="input-group">
+                                <input type="number" name="cantidad" class="form-control" min="1" th:value="${item.cantidad}">
+                                <div class="input-group-append">
+                                    <button type="submit" class="btn btn-primary">Actualizar</button>
+                                </div>
+                            </div>
+                        </form>
+                    </td>
+                    <td th:text="${item.libro.precio}"></td>
+                    <td th:text="${item.libro.precio * item.cantidad}"></td>
+                    <td>
+                        <form th:action="@{/cart/remove/{itemId}(itemId=${item.id})}" method="post">
+                            <button type="submit" class="btn btn-danger">Quitar</button>
+                        </form>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4"></td>
+                    <td class="total" colspan="2">
+                        Total: <span th:text="${total}"></span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="empty-cart-message" th:if="${cartItems.empty}">
+            <p>El carrito de compras está vacío.</p>
+        </div>
+
+        <div class="clear-cart-button" th:unless="${cartItems.empty}">
+            <form th:action="@{/cart/clear}" method="post">
+                <button type="submit" class="btn btn-danger">Vaciar carrito</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Importar los archivos JavaScript necesarios -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+</body>
+</html>

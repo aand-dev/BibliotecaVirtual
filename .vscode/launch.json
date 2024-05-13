@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-BibliotecavApplication<bibliotecav>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.bibliotecav.bibliotecav.BibliotecavApplication",
+            "projectName": "bibliotecav",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}

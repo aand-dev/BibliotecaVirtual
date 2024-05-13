@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" lang="en">
+
+<head th:replace="layout/layout :: head">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalle de Libro</title>
+    <!-- Agregar enlaces a los archivos CSS de Bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+
+<body>
+    <header header th:replace="layout/layout :: header"></header>
+
+    <div class="container">
+        <h2 class="mt-2">Detalles</h2>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card mb-4">
+                    <img th:src="@{/images/{imagen}(imagen=${libro.imagen})}" class="card-img-top" style="height: 100%;" alt="Imagen del libro">
+                    <div class="card-body">
+                        <h5 class="card-title" th:text="${libro.autor}"></h5>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <h5 class="card-title" th:text="${libro.titulo}"></h5>
+                                <p class="card-text" th:text="${libro.genero}"></p>
+                                <p class="card-text" th:text="${libro.precio}"></p>
+                                <p class="card-text" th:text="${libro.stock}"></p>
+
+                                <div class="container d-flex">
+                                    <form th:action="@{/cart/add}" method="post">
+                                        <input type="hidden" name="bookId" th:value="${libro.id}">
+                                        <button type="submit" class="btn btn-primary btn-sm mx-2" style="height: 40px; font-size: 0.7rem; text-align: center;">Agregar al carrito</button>
+                                    </form>
+    
+                                    <div class="text-center">
+                                        <a th:href="@{/libros}" class="btn btn-secondary btn-sm mx-2" style="height: 40px; font-size: 0.7rem; text-align: center;">Listar</a>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <h4 class="card-title">Sinopsis</h4>
+                                <p class="card-text" ><span th:text="${libro.sinopsis}"></span> is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+                                <!-- Aquí puedes agregar la sinopsis del libro -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="text-center">
+                            <a th:href="@{/}" class="btn btn-outline-primary btn-sm">Atrás</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Agregar enlaces a los archivos JavaScript de Bootstrap -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>
